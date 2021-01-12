@@ -74,18 +74,18 @@ public class Vector3 {
     }
 
     /**
-     * Calculates the dotproduct
+     * Calculates the dotProduct
      * @param b The second vector
-     * @return The dotproduct
+     * @return The dotProduct
      */
-    public double dot(Vector3 b){
+    public double dotProduct(Vector3 b){
         return this.x * b.x + this.y * b.x + this.z * b.z;
     }
 
     /**
-     * Calculates the crossprodct
+     * Calculates the crossProdct
      * @param b The second vector
-     * @return The crossproduct
+     * @return The crossProduct
      */
     public Vector3 crossProduct(Vector3 b){
         return new Vector3(this.y * b.z - this.z * b.y, this.z * b.x - this.x * b.z, this.x * b.y - this.y *b.x);

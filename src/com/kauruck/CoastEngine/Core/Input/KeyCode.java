@@ -44,6 +44,7 @@ public enum KeyCode {
     Alt,
     AltGr,
     Esc,
+    Backspace,
     F1,
     F2,
     F3,
@@ -73,7 +74,16 @@ public enum KeyCode {
     ArrowUp,
     ArrowDown,
     ArrowLeft,
-    ArrowRight;
+    ArrowRight,
+    Hash,
+    KeyAdd,
+    Dot,
+    Comma,
+    Dash,
+    NumAdd,
+    NumDived,
+    NumMultiply,
+    NumSubtract;
 
     /**
      * Gets the index of the KeyCode in KeyCode.values();

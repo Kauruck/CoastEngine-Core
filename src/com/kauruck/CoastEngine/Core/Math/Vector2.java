@@ -49,20 +49,20 @@ public class Vector2 {
     }
 
     /**
-     * Calculates the crossprodct
+     * Calculates the crossProdct
      * @param b The second vector
-     * @return The crossproduct
+     * @return The crossProduct
      */
     public Vector3 crossProduct(Vector2 b){
         return new Vector3(0, 0, this.x * b.y - this.y * b.x);
     }
 
     /**
-     * Calculates the dotproduct
+     * Calculates the dotProduct
      * @param b The second vector
-     * @return The dotproduct
+     * @return The dotProduct
      */
-    public double dot(Vector2 b){
+    public double dotProduct(Vector2 b){
         return this.x * b.x + this.y * b.y;
     }
 
