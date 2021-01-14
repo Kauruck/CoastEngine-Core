@@ -3,6 +3,8 @@ package com.kauruck.CoastEngine.Core.Math;
 //https://www.mathsisfun.com/algebra/vectors-dot-product.html [12.01.2021]
 //https://www.mathsisfun.com/algebra/vectors-cross-product.html [12.01.2021]
 //https://stackoverflow.com/questions/243945/calculating-a-2d-vectors-cross-product [12.01.2021]
+//https://matthew-brett.github.io/teaching/rotation_2d.html[13.01.2021]
+//https://en.wikipedia.org/wiki/Rotation_matrix[13.01.2021]
 
 /**
  * A point in 2d space as offset from 0|0
@@ -64,6 +66,16 @@ public class Vector2 {
      */
     public double dotProduct(Vector2 b){
         return this.x * b.x + this.y * b.y;
+    }
+
+    public Vector2 rotateAround(Vector2 center, double deg){
+        double rad = Math.toRadians(deg);
+        Vector2 centerd = this.subtract(center);
+        double x1 = centerd.getX();
+        double y1 = centerd.getY();
+        double x2 = x1*Math.cos(rad) - y1*Math.sin(rad);
+        double y2 = x1*Math.sin(rad) + y1*Math.cos(rad);
+        return new Vector2(x2,y2).add(center);
     }
 
     /**

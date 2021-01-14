@@ -50,18 +50,26 @@ public class Input {
 
     /**
      * Register that a key was just pressed
+     * Converts the AltGr key form crt + alt
      * @param keyCode The key
      */
     public static void onKeyDown(KeyCode keyCode){
+        if(Input.getKey(KeyCode.Crt) && keyCode == KeyCode.Alt)
+            keyCode = KeyCode.AltGr;
         keyActive[keyCode.indexOf()] = true;
         keyDown[keyCode.indexOf()] = true;
     }
 
     /**
-     * Register that a key was just released
+     * Register that a key was just released<br>
+     * Converts the AltGr key from crt + alt
      * @param keyCode The key
      */
     public static void onKeyUp(KeyCode keyCode){
+        if(Input.getKey(KeyCode.AltGr) && keyCode == KeyCode.Crt)
+            keyCode = KeyCode.AltGr;
+        if(Input.getKeyUp(KeyCode.AltGr) && keyCode == KeyCode.Alt)
+            keyCode = KeyCode.None;
         keyActive[keyCode.indexOf()] = false;
         keyUp[keyCode.indexOf()] = true;
     }
