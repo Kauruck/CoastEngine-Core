@@ -1,4 +1,4 @@
-package com.kauruck.CoastEngine.Core.Input;
+package com.kauruck.coastEngine.core.input;
 
 //Key codes for java https://docs.oracle.com/javase/7/docs/api/java/awt/event/KeyEvent.html[14.01.2021]
 //https://stackoverflow.com/questions/36344189/how-to-click-windows-key-in-java[14.01.2021]

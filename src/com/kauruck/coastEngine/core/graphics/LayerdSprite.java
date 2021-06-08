@@ -1,4 +1,4 @@
-package com.kauruck.CoastEngine.Core.Graphics;
+package com.kauruck.coastEngine.core.graphics;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

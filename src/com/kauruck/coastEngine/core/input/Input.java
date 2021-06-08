@@ -1,6 +1,6 @@
-package com.kauruck.CoastEngine.Core.Input;
+package com.kauruck.coastEngine.core.input;
 
-import com.kauruck.CoastEngine.Core.Math.Vector2;
+import com.kauruck.coastEngine.core.math.Vector2;
 
 import java.util.Arrays;
 

@@ -1,6 +1,6 @@
-package com.kauruck.CoastEngine.Core.Graphics;
+package com.kauruck.coastEngine.core.graphics;
 
-import com.kauruck.CoastEngine.Core.Math.Vector2;
+import com.kauruck.coastEngine.core.math.Vector2;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

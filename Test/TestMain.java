@@ -1,7 +1,5 @@
-import com.kauruck.CoastEngine.Core.Input.Input;
-import com.kauruck.CoastEngine.Core.Input.KeyCode;
-import com.kauruck.CoastEngine.Core.Math.Vector2;
-import com.kauruck.CoastEngine.Core.Math.Vector3;
+import com.kauruck.coastEngine.core.input.Input;
+import com.kauruck.coastEngine.core.input.KeyCode;
 
 import java.util.Timer;
 import java.util.TimerTask;

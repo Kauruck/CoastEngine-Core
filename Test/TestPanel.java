@@ -1,4 +1,4 @@
-import com.kauruck.CoastEngine.Core.Math.Vector2;
+import com.kauruck.coastEngine.core.math.Vector2;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package com.kauruck.CoastEngine.Core.Math;
+package com.kauruck.coastEngine.core.math;
 //Vector math from https://www.mathsisfun.com/algebra/vectors.html [12.0.2021]
 //https://www.mathsisfun.com/algebra/vectors-dot-product.html [12.01.2021]
 //https://www.mathsisfun.com/algebra/vectors-cross-product.html [12.01.2021]
