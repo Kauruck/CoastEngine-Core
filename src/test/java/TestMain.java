@@ -31,7 +31,7 @@ public class TestMain {
 
             @Override
             public void onEnd() {
-                logger.info("Start");
+                logger.info("End");
             }
         });
         try {
@@ -43,6 +43,11 @@ public class TestMain {
         frame.setVisible(true);
         timer = new Timer();
         timer.schedule(new Updater(), 10);
+        try {
+            ThreadManger.stopThread(pid);
+        } catch (NoSuchProcessException e) {
+            e.printStackTrace();
+        }
     }
 
     static class Updater extends TimerTask {
