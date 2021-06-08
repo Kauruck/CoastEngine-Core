@@ -9,7 +9,7 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public class ThreadManger {
-    public static final Logger TREAD_LOGGER = LoggerFactory.getLogger(ThreadManger.class);
+    public static final Logger TREAD_LOGGER = LoggerFactory.getLogger("Thread Manger");
 
     private static final List<Thread> threads = new ArrayList<>();
 
