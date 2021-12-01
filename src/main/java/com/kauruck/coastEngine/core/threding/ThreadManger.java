@@ -28,6 +28,12 @@ public class ThreadManger {
         throw new NoSuchProcessException(pid);
     }
 
+    public static void stopAllThreads() throws NoSuchProcessException {
+        for(int i = 0; i < threads.size(); i++){
+            stopThread(i);
+        }
+    }
+
     public static void stopThread(int pid) throws NoSuchProcessException {
         if(pid < threads.size()){
             threads.get(pid).stop();
