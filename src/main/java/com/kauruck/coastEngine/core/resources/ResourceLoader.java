@@ -39,9 +39,9 @@ public class ResourceLoader {
             throw new FileNotFoundException("There is no file with the extension(s): " + Arrays.toString(extensions) + " in " + resourceLocation);
 
         if(handler.useStream()){
-            return handler.loadFromStream(getResourceAsStream(dir + fileName), fileName);
+            return handler.loadFromStream(getResourceAsStream(dir + fileName), resourceLocation);
         }else{
-            return handler.loadFromString(loadAsString(dir + fileName), fileName);
+            return handler.loadFromString(loadAsString(dir + fileName), resourceLocation);
         }
 
     }

@@ -7,7 +7,7 @@ public class TextHandler extends ResourceHandler<String>{
     }
 
     @Override
-    public String loadFromString(String s, String fileName) {
+    public String loadFromString(String s, ResourceLocation resourceLocation) {
         return s;
     }
 }

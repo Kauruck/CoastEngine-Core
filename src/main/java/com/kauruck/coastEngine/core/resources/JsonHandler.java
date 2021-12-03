@@ -13,10 +13,10 @@ public class JsonHandler extends ResourceHandler<JsonObject> {
     }
 
     @Override
-    public JsonObject loadFromString(String s, String fileName) {
+    public JsonObject loadFromString(String s, ResourceLocation resourceLocation) {
         JsonElement element = JsonParser.parseString(s);
         if(!element.isJsonObject()) {
-            ResourceLoader.RESOURCES_LOGGER.error("There is missformated json file: " + fileName);
+            ResourceLoader.RESOURCES_LOGGER.error("There is missformated json file: " + resourceLocation);
             return null;
         }
         return element.getAsJsonObject();

@@ -9,12 +9,12 @@ public abstract class ResourceHandler<T> {
 
     public abstract String[] getValidFileExtensions();
 
-    public T loadFromString(String s, String fileName){
+    public T loadFromString(String s, ResourceLocation resourceLocation){
         RESOURCES_LOGGER.warn("There is no string parser defined for: " + this.getClass().getName());
         return null;
     }
 
-    public T loadFromStream(InputStream s, String fileName){
+    public T loadFromStream(InputStream s, ResourceLocation resourceLocation){
         RESOURCES_LOGGER.warn("There is no stream parser defined for: " + this.getClass().getName());
         return null;
     }
