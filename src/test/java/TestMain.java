@@ -1,11 +1,18 @@
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.kauruck.coastEngine.core.Core;
+import com.kauruck.coastEngine.core.exception.NoHandlerException;
 import com.kauruck.coastEngine.core.exception.NoSuchProcessException;
 import com.kauruck.coastEngine.core.input.Input;
 import com.kauruck.coastEngine.core.input.KeyCode;
+import com.kauruck.coastEngine.core.resources.ResourceLoader;
+import com.kauruck.coastEngine.core.resources.ResourceLocation;
 import com.kauruck.coastEngine.core.threding.Thread;
 import com.kauruck.coastEngine.core.threding.ThreadManger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -16,9 +23,9 @@ public class TestMain {
     static TestFrame frame;
     static Logger logger = LoggerFactory.getLogger(TestMain.class);
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException, NoHandlerException {
         logger.warn("Starting");
-        int pid = ThreadManger.addThread(new Thread(15) {
+        /*int pid = ThreadManger.addThread(new Thread(15) {
             @Override
             public void onTick(float deltaTime) {
                 logger.info("Tick");
@@ -47,7 +54,13 @@ public class TestMain {
             ThreadManger.stopThread(pid);
         } catch (NoSuchProcessException e) {
             e.printStackTrace();
-        }
+        }*/
+
+        Core.init();
+        String s = ResourceLoader.loadResources(new ResourceLocation("test", "assets/a"), String.class);
+        JsonObject json = ResourceLoader.loadResources(new ResourceLocation("test", "assets/a"), JsonObject.class);
+        System.out.println(s);
+        System.out.println(json);
     }
 
     static class Updater extends TimerTask {
