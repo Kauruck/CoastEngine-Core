@@ -5,7 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 public class ResourceLoader {
 
@@ -23,7 +27,7 @@ public class ResourceLoader {
     public static <T> T loadResources(ResourceLocation resourceLocation, Class<T> classToLoad) throws IOException, NoHandlerException {
         String path = resourceLocation.getAsPath();
         String dir = getDirectory(path);
-        List<String> availableFiles = getResourceFiles(dir);
+        List<String> availableFiles = loadDir(dir);
         if(availableFiles.size() == 0)
             throw new FileNotFoundException("Could not load resourceLocation: " + resourceLocation);
 
@@ -39,11 +43,43 @@ public class ResourceLoader {
             throw new FileNotFoundException("There is no file with the extension(s): " + Arrays.toString(extensions) + " in " + resourceLocation);
 
         if(handler.useStream()){
-            return handler.loadFromStream(getResourceAsStream(dir + fileName), resourceLocation);
+            return handler.loadFromStream(getResourceAsStream(fileName), resourceLocation);
         }else{
-            return handler.loadFromString(loadAsString(dir + fileName), resourceLocation);
+            return handler.loadFromString(loadAsString(fileName), resourceLocation);
         }
 
+    }
+
+    public static List<String> loadDir(String path) throws IOException {
+        List<String> out = new ArrayList<>();
+        final File jarFile = new File(ResourceLoader.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+
+        if(jarFile.isFile()) {  // Run with JAR file
+            final JarFile jar = new JarFile(jarFile);
+            Enumeration<JarEntry> entries = jar.entries(); //gives ALL entries in jar
+            while(entries.hasMoreElements()) {
+                final String name = entries.nextElement().getName();
+                if (name.startsWith(path) && name.lastIndexOf("/") != name.length() - 1) { //filter according to the path
+                    out.add(name);
+                }
+            }
+            jar.close();
+        } else { // Run with IDE
+            final URL url = ResourceLoader.class.getResource("/" + path);
+            final  String basePath = ResourceLoader.class.getResource("/").getPath();
+            if (url != null) {
+                try {
+                    final File apps = new File(url.toURI());
+                    for (File app : apps.listFiles()) {
+                        out.add(app.getPath().replace(basePath, ""));
+                    }
+                } catch (URISyntaxException ex) {
+                    // never happens
+                }
+            }
+        }
+
+        return out;
     }
 
     private static String loadAsString(String path) throws IOException{
@@ -100,18 +136,17 @@ public class ResourceLoader {
 
             while ((resource = br.readLine()) != null) {
                 filenames.add(resource);
-                RESOURCES_LOGGER.info(resource);
             }
         }
 
         return filenames;
     }
 
-    private static InputStream getResourceAsStream(String resource) {
-        final InputStream in
-                = getContextClassLoader().getResourceAsStream(resource);
-
-        return in == null ? ResourceLoader.class.getClassLoader().getResourceAsStream(resource) : in;
+    private static InputStream getResourceAsStream(String resource) throws IOException {
+        URL fileURL = getContextClassLoader().getResource(resource);
+        if(fileURL == null)
+            fileURL = ResourceLoader.class.getClassLoader().getResource(resource);
+        return fileURL.openStream();
     }
 
     private static ClassLoader getContextClassLoader() {

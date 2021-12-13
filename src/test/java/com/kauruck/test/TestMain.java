@@ -62,21 +62,21 @@ public class TestMain {
         }*/
 
         Core.init();
-        TestMain test = new TestMain();
-        System.out.println(test.test());
+        //TestMain test = new TestMain();
+        //System.out.println(test.test());
 
 
 
 
 
-        /*String s = ResourceLoader.loadResources(new ResourceLocation("test", "assets/a"), String.class);
+        String s = ResourceLoader.loadResources(new ResourceLocation("test", "assets/a"), String.class);
         JsonObject json = ResourceLoader.loadResources(new ResourceLocation("test", "assets/a"), JsonObject.class);
         System.out.println(s);
-        System.out.println(json);*/
+        System.out.println(json);
     }
 
     public List<String> test() throws IOException {
-        try (InputStream resource = this.getClass().getClassLoader().getResourceAsStream("")) {
+        try (InputStream resource = this.getClass().getClassLoader().getResourceAsStream("/")) {
             System.out.println(resource);
             List<String> blacklistedWordsDatabase = new BufferedReader(
                     new InputStreamReader(
