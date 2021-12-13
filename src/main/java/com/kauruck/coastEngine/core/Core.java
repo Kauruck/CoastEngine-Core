@@ -10,6 +10,6 @@ public class Core {
 
     public static void init(){
         ResourceLoader.registerResourceHandler(new TextHandler(), String.class);
-        ResourceLoader.registerResourceHandler(new JsonHandler(), JsonElement.class);
+        ResourceLoader.registerResourceHandler(new JsonHandler(), JsonObject.class);
     }
 }

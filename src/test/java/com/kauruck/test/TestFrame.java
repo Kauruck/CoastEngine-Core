@@ -1,3 +1,5 @@
+package com.kauruck.test;
+
 import com.kauruck.coastEngine.core.input.Input;
 import com.kauruck.coastEngine.core.input.KeyCode;
 

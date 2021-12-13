@@ -89,16 +89,18 @@ public class ResourceLoader {
         return path.substring(lastSlash + 1);
     }
 
-    private static List<String> getResourceFiles(String path) throws IOException {
+    public static List<String> getResourceFiles(String path) throws IOException {
         List<String> filenames = new ArrayList<>();
 
         try (
                 InputStream in = getResourceAsStream(path);
+
                 BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
             String resource;
 
             while ((resource = br.readLine()) != null) {
                 filenames.add(resource);
+                RESOURCES_LOGGER.info(resource);
             }
         }
 
@@ -109,7 +111,7 @@ public class ResourceLoader {
         final InputStream in
                 = getContextClassLoader().getResourceAsStream(resource);
 
-        return in == null ? ResourceLoader.class.getResourceAsStream(resource) : in;
+        return in == null ? ResourceLoader.class.getClassLoader().getResourceAsStream(resource) : in;
     }
 
     private static ClassLoader getContextClassLoader() {

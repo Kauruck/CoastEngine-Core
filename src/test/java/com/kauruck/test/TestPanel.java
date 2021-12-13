@@ -1,3 +1,5 @@
+package com.kauruck.test;
+
 import com.kauruck.coastEngine.core.math.Vector2;
 
 import javax.swing.*;
