@@ -10,6 +10,8 @@ import java.net.URL;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ResourceLoader {
 
@@ -64,14 +66,26 @@ public class ResourceLoader {
                 }
             }
             jar.close();
-        } else { // Run with IDE
+        }
+        { // Run with IDE
             final URL url = ResourceLoader.class.getResource("/" + path);
-            final  String basePath = ResourceLoader.class.getResource("/").getPath();
+            //String basePath = ResourceLoader.class.getResource("/").getPath();
+            final String regex = path.replace("/", "\\/")+".*";
+            final Pattern resourcePattern = Pattern.compile(regex);
+            /*if(basePath.startsWith("/"))
+                basePath = basePath.substring(1);*/
             if (url != null) {
                 try {
                     final File apps = new File(url.toURI());
                     for (File app : apps.listFiles()) {
-                        out.add(app.getPath().replace(basePath, ""));
+                        String currentPath = app.getPath();
+                        //So that windows does not annoy me
+                        currentPath = currentPath.replace("\\","/");
+                        //Trim the base path, so that loadResource will work
+                        Matcher matcher = resourcePattern.matcher(currentPath);
+                        matcher.find();
+                        String match = matcher.group();
+                        out.add(match);
                     }
                 } catch (URISyntaxException ex) {
                     // never happens
