@@ -2,7 +2,9 @@ package com.kauruck.coastEngine.core.input;
 
 import com.kauruck.coastEngine.core.math.Vector2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Input {
 
@@ -17,6 +19,9 @@ public class Input {
     private static float scrollWheelPos = 0;
     private static Vector2 mousePos = new Vector2();
     private static boolean mouseMoved = false;
+
+    //Listeners
+    private static final List<KeyListener> keyListeners = new ArrayList<>();
 
 
 
@@ -170,6 +175,12 @@ public class Input {
      * Imported: This should be called after you dealt with the up and down event
      */
     public static void update(){
+        //Process Listeners
+        keyListeners.stream()
+                .filter((listener) -> (getKey(listener.getKeyCode()) && listener.getAction() == KeyAction.Repeat) ||
+                        (getKeyDown(listener.getKeyCode()) && listener.getAction() == KeyAction.Down) ||
+                        (getKeyUp(listener.getKeyCode()) && listener.getAction() == KeyAction.Up))
+                .forEach(KeyListener::trigger);
         //Keyboard reset
         Arrays.fill(keyDown, false);
         Arrays.fill(keyUp, false);
@@ -179,4 +190,31 @@ public class Input {
         mouseMoved = false;
     }
 
+    public static void registerKeyListener(KeyCode keyCode, KeyAction action, IOnEvent onEvent){
+        keyListeners.add(new KeyListener(keyCode, onEvent, action));
+    }
+
+    private static class KeyListener {
+        private final KeyCode keyCode;
+        private final IOnEvent event;
+        private final KeyAction action;
+
+        public KeyListener(KeyCode keyCode, IOnEvent event, KeyAction action) {
+            this.keyCode = keyCode;
+            this.event = event;
+            this.action = action;
+        }
+
+        public void trigger(){
+            event.execute();
+        }
+
+        public KeyCode getKeyCode() {
+            return keyCode;
+        }
+
+        public KeyAction getAction() {
+            return action;
+        }
+    }
 }
