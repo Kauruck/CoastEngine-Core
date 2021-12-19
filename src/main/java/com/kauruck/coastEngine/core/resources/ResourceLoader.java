@@ -87,7 +87,7 @@ public class ResourceLoader {
                         String match = matcher.group();
                         out.add(match);
                     }
-                } catch (URISyntaxException ex) {
+                } catch (URISyntaxException | IllegalArgumentException ex) {
                     // never happens
                 }
             }
