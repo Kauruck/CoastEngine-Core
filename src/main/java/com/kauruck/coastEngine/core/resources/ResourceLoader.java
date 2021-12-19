@@ -12,6 +12,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class ResourceLoader {
 
@@ -40,7 +41,12 @@ public class ResourceLoader {
 
         String[] extensions = handler.getValidFileExtensions();
 
-        String fileName = getFullFileName(availableFiles, extensions);
+        List<String> validFiles = getValidFiles(availableFiles, extensions);
+        String fileName = validFiles.stream()
+                .filter((s) -> s.contains(resourceLocation.getAsPath()))
+                .findAny()
+                .orElse(null);
+
         if(fileName == null)
             throw new FileNotFoundException("There is no file with the extension(s): " + Arrays.toString(extensions) + " in " + resourceLocation);
 
@@ -111,11 +117,10 @@ public class ResourceLoader {
         return builder.toString();
     }
 
-    private static String getFullFileName(List<String> fileNames, String[] validExtension){
+    private static List<String> getValidFiles(List<String> fileNames, String[] validExtension){
         return fileNames.stream()
                 .filter((s) -> filterFileExtension(s, validExtension))
-                .findAny()
-                .orElse(null);
+                .collect(Collectors.toList());
     }
 
     private static boolean filterFileExtension(String fileName, String[] validExtensions){

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.kauruck.coastEngine.core.Core;
 import com.kauruck.coastEngine.core.exception.NoHandlerException;
 import com.kauruck.coastEngine.core.input.Input;
+import com.kauruck.coastEngine.core.input.KeyAction;
 import com.kauruck.coastEngine.core.input.KeyCode;
 import com.kauruck.coastEngine.core.resources.ResourceLoader;
 import com.kauruck.coastEngine.core.resources.ResourceLocation;
@@ -69,10 +70,25 @@ public class TestMain {
 
 
 
-        String s = ResourceLoader.loadResources(new ResourceLocation("test", "assets/a"), String.class);
+        String s = ResourceLoader.loadResources(new ResourceLocation("test", "assets/b"), String.class);
         JsonObject json = ResourceLoader.loadResources(new ResourceLocation("test", "assets/a"), JsonObject.class);
         System.out.println(s);
         System.out.println(json);
+
+        /*Input.registerKeyListener(KeyCode.T, KeyAction.Down, () -> {
+            System.out.println("Test");
+        });
+
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Input.onKeyDown(KeyCode.T);
+
+        Input.update();*/
     }
 
     public List<String> test() throws IOException {
