@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
 
 public class ResourceLoader {
 
+    public static final List<Class<?>> RESOURCE_DOMAINS = new ArrayList<>();
+
     public static final Logger RESOURCES_LOGGER = LoggerFactory.getLogger("Resources Manger");
 
     private static final Map<Class<?>, ResourceHandler> resourceHandlers = new HashMap<>();
@@ -60,44 +62,46 @@ public class ResourceLoader {
 
     public static List<String> loadDir(String path) throws IOException {
         List<String> out = new ArrayList<>();
-        final File jarFile = new File(ResourceLoader.class.getProtectionDomain().getCodeSource().getLocation().getPath());
 
-        if(jarFile.isFile()) {  // Run with JAR file
-            final JarFile jar = new JarFile(jarFile);
-            Enumeration<JarEntry> entries = jar.entries(); //gives ALL entries in jar
-            while(entries.hasMoreElements()) {
-                final String name = entries.nextElement().getName();
-                if (name.startsWith(path) && name.lastIndexOf("/") != name.length() - 1) { //filter according to the path
-                    out.add(name);
-                }
-            }
-            jar.close();
-        }
-        { // Run with IDE
-            final URL url = ResourceLoader.class.getResource("/" + path);
-            //String basePath = ResourceLoader.class.getResource("/").getPath();
-            final String regex = path.replace("/", "\\/")+".*";
-            final Pattern resourcePattern = Pattern.compile(regex);
-            /*if(basePath.startsWith("/"))
-                basePath = basePath.substring(1);*/
-            if (url != null) {
-                try {
-                    final File apps = new File(url.toURI());
-                    for (File app : apps.listFiles()) {
-                        String currentPath = app.getPath();
-                        //So that windows does not annoy me
-                        currentPath = currentPath.replace("\\","/");
-                        //Trim the base path, so that loadResource will work
-                        Matcher matcher = resourcePattern.matcher(currentPath);
-                        matcher.find();
-                        String match = matcher.group();
-                        out.add(match);
+        for(Class<?> current : RESOURCE_DOMAINS) {
+            final File jarFile = new File(current.getProtectionDomain().getCodeSource().getLocation().getPath());
+
+            if (jarFile.isFile()) {  // Run with JAR file
+                final JarFile jar = new JarFile(jarFile);
+                Enumeration<JarEntry> entries = jar.entries(); //gives ALL entries in jar
+                while (entries.hasMoreElements()) {
+                    final String name = entries.nextElement().getName();
+                    if (name.startsWith(path) && name.lastIndexOf("/") != name.length() - 1) { //filter according to the path
+                        out.add(name);
                     }
-                } catch (URISyntaxException | IllegalArgumentException ex) {
-                    // never happens
+                }
+                jar.close();
+            }
+
+            { // Run with IDE
+                final URL url = current.getResource("/" + path);
+                final String regex = path.replace("/", "\\/")+".*";
+                final Pattern resourcePattern = Pattern.compile(regex);
+                if (url != null) {
+                    try {
+                        final File apps = new File(url.toURI());
+                        for (File app : apps.listFiles()) {
+                            String currentPath = app.getPath();
+                            //So that windows does not annoy me
+                            currentPath = currentPath.replace("\\","/");
+                            //Trim the base path, so that loadResource will work
+                            Matcher matcher = resourcePattern.matcher(currentPath);
+                            matcher.find();
+                            String match = matcher.group();
+                            out.add(match);
+                        }
+                    } catch (URISyntaxException | IllegalArgumentException ex) {
+                        // never happens
+                    }
                 }
             }
         }
+
 
         return out;
     }

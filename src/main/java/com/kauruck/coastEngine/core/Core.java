@@ -9,6 +9,7 @@ import com.kauruck.coastEngine.core.resources.TextHandler;
 public class Core {
 
     public static void init(){
+        ResourceLoader.RESOURCE_DOMAINS.add(Core.class);
         ResourceLoader.registerResourceHandler(new TextHandler(), String.class);
         ResourceLoader.registerResourceHandler(new JsonHandler(), JsonObject.class);
     }
