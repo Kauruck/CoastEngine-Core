@@ -1,6 +1,6 @@
 package com.kauruck.coastEngine.core.input;
 
-public enum KeyAction {
+public enum InputAction {
     Down,
     Up,
     Repeat
